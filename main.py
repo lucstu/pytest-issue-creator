@@ -29,8 +29,15 @@ def create_issue(f):
 
     body = 'There was a failed test in {}. This is the following error message: {}'.format(f[0], f[1])
 
+    title = f[0] + '::' + hash_func(f[1].message)
+
+    open_issues = repo.get_issues(state='open')
+    for issue in open_issues:
+        if issue.title == title:
+            return
+
     issue = repo.create_issue(
-        title=f[0] + '::' + hash_func(f[1].message),
+        title= title,
         body=body
     )
 
