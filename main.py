@@ -1,5 +1,5 @@
 from junitparser import JUnitXml, Error, Failure, Skipped
-from github import GitHub
+import github
 import os
 import hashlib
 
@@ -22,7 +22,7 @@ def hash_func(string):
     return hash_object.hexdigest()  
 
 def create_issue(f):
-    git = GitHub(os.environ['INPUT_TOKEN'])
+    git = github.Github(os.environ['INPUT_TOKEN'])
 
     # GITHUB_REPOSITORY is the repo name in owner/name format in Github Workflow
     repo = git.get_repo(os.environ['GITHUB_REPOSITORY'])
