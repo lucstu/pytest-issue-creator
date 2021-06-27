@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="1" tests="10" time="72.788" timestamp="2021-06-27T12:30:02.717069" hostname="WIN-2MQOEJBLJRB"><testcase classname="test_change_label_type.Test" name="test_change_label_type" time="8.884" /><testcase classname="test_delete_label.Test" name="test_delete_label" time="7.426" /><testcase classname="test_edit_label.Test" name="test_incr_label_size_right_arrow_drag" time="7.539" /><testcase classname="test_edit_label_name.Test" name="test_edit_label_name" time="7.935" /><testcase classname="test_fine_adjustment.Test" name="test_fine_adjust" time="6.631" /><testcase classname="test_ghost_label_after_drag.Test" name="test_ghost_after_drag" time="6.165"><skipped type="pytest.skip" message="Width is too small">C:\Users\Administrator\Projects\NG_Visualizer\tests\test_ghost_label_after_drag.py:18: Width is too small</skipped></testcase><testcase classname="test_hover.Test" name="test_hover" time="7.248" /><testcase classname="test_preview_hover_and_size.Test" name="test_preview_hover_and_size" time="6.721" /><testcase classname="test_right_click.Test" name="test_right_click" time="7.476"><failure message="selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;[class='menu edit']&quot;}&#10;  (Session info: headless chrome=91.0.4472.124)">self = &lt;test_right_click.Test object at 0x0000028AAC708C40&gt;
+
+    def test_right_click(self):
+        self.fts.log_header("Testing Right Click")
+        self.fts.setup_feva()
+        self.fts.select_project()
+        self.fts.wait_by_cond(exp_cond= EC.visibility_of_element_located,search_text='toolbar-button option')
+        toolbar_button = self.fts.acquire_element('toolbar-button option')
+        # self.fts.click(toolbar_button)
+    
+        # preview_slider = self.fts.acquire_element('slider-preview')
+    
+        test = self.fts.acquire_element(search_text='type-1 label-react')
+    
+        #if test.size['width'] &lt;= 19:
+            #pytest.skip("Width is too small")
+    
+        # TODO Measure test's pixel length, if too narrow, then comment on test.
+    
+        track_info_contents = self.fts.acquire_element(search_text='track-info-panel')
+    
+        track_contents = self.fts.acquire_elements(search_text='track-panel display type-',pattern_match='contains')
+        arr = []
+    
+        for track in track_contents:
+            arr.append(track.text)
+        print(arr)
+        self.fts.manipulate_right_click(test)
+    
+        sleep(1)
+    
+&gt;       edit_menu = self.fts.acquire_element(search_text='menu edit')
+
+test_right_click.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+feva_test_suite.py:358: in acquire_element
+    return parent_elem.find_element_by_css_selector(search_script)
+c:\python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:598: in find_element_by_css_selector
+    return self.find_element(by=By.CSS_SELECTOR, value=css_selector)
+c:\python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:976: in find_element
+    return self.execute(Command.FIND_ELEMENT, {
+c:\python39\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x0000028AAC68AFA0&gt;
+response = {'status': 404, 'value': '{"value":{"error":"no such element","message":"no such element: Unable to locate element: {\...Thunk [0x76A66709+25]\\n\\tRtlGetFullPathName_UEx [0x776678BD+173]\\n\\tRtlGetFullPathName_UEx [0x7766788B+123]\\n"}}'}
+
+    def check_response(self, response):
+        """
+        Checks that a JSON response from the WebDriver does not have an error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get('status', None)
+        if status is None or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get('value', None)
+            if value_json and isinstance(value_json, basestring):
+                import json
+                try:
+                    value = json.loads(value_json)
+                    if len(value.keys()) == 1:
+                        value = value['value']
+                    status = value.get('error', None)
+                    if status is None:
+                        status = value["status"]
+                        message = value["value"]
+                        if not isinstance(message, basestring):
+                            value = message
+                            message = message.get('message')
+                    else:
+                        message = value.get('message', None)
+                except ValueError:
+                    pass
+    
+        exception_class = ErrorInResponseException
+        if status in ErrorCode.NO_SUCH_ELEMENT:
+            exception_class = NoSuchElementException
+        elif status in ErrorCode.NO_SUCH_FRAME:
+            exception_class = NoSuchFrameException
+        elif status in ErrorCode.NO_SUCH_WINDOW:
+            exception_class = NoSuchWindowException
+        elif status in ErrorCode.STALE_ELEMENT_REFERENCE:
+            exception_class = StaleElementReferenceException
+        elif status in ErrorCode.ELEMENT_NOT_VISIBLE:
+            exception_class = ElementNotVisibleException
+        elif status in ErrorCode.INVALID_ELEMENT_STATE:
+            exception_class = InvalidElementStateException
+        elif status in ErrorCode.INVALID_SELECTOR \
+                or status in ErrorCode.INVALID_XPATH_SELECTOR \
+                or status in ErrorCode.INVALID_XPATH_SELECTOR_RETURN_TYPER:
+            exception_class = InvalidSelectorException
+        elif status in ErrorCode.ELEMENT_IS_NOT_SELECTABLE:
+            exception_class = ElementNotSelectableException
+        elif status in ErrorCode.ELEMENT_NOT_INTERACTABLE:
+            exception_class = ElementNotInteractableException
+        elif status in ErrorCode.INVALID_COOKIE_DOMAIN:
+            exception_class = InvalidCookieDomainException
+        elif status in ErrorCode.UNABLE_TO_SET_COOKIE:
+            exception_class = UnableToSetCookieException
+        elif status in ErrorCode.TIMEOUT:
+            exception_class = TimeoutException
+        elif status in ErrorCode.SCRIPT_TIMEOUT:
+            exception_class = TimeoutException
+        elif status in ErrorCode.UNKNOWN_ERROR:
+            exception_class = WebDriverException
+        elif status in ErrorCode.UNEXPECTED_ALERT_OPEN:
+            exception_class = UnexpectedAlertPresentException
+        elif status in ErrorCode.NO_ALERT_OPEN:
+            exception_class = NoAlertPresentException
+        elif status in ErrorCode.IME_NOT_AVAILABLE:
+            exception_class = ImeNotAvailableException
+        elif status in ErrorCode.IME_ENGINE_ACTIVATION_FAILED:
+            exception_class = ImeActivationFailedException
+        elif status in ErrorCode.MOVE_TARGET_OUT_OF_BOUNDS:
+            exception_class = MoveTargetOutOfBoundsException
+        elif status in ErrorCode.JAVASCRIPT_ERROR:
+            exception_class = JavascriptException
+        elif status in ErrorCode.SESSION_NOT_CREATED:
+            exception_class = SessionNotCreatedException
+        elif status in ErrorCode.INVALID_ARGUMENT:
+            exception_class = InvalidArgumentException
+        elif status in ErrorCode.NO_SUCH_COOKIE:
+            exception_class = NoSuchCookieException
+        elif status in ErrorCode.UNABLE_TO_CAPTURE_SCREEN:
+            exception_class = ScreenshotException
+        elif status in ErrorCode.ELEMENT_CLICK_INTERCEPTED:
+            exception_class = ElementClickInterceptedException
+        elif status in ErrorCode.INSECURE_CERTIFICATE:
+            exception_class = InsecureCertificateException
+        elif status in ErrorCode.INVALID_COORDINATES:
+            exception_class = InvalidCoordinatesException
+        elif status in ErrorCode.INVALID_SESSION_ID:
+            exception_class = InvalidSessionIdException
+        elif status in ErrorCode.UNKNOWN_METHOD:
+            exception_class = UnknownMethodException
+        else:
+            exception_class = WebDriverException
+        if value == '' or value is None:
+            value = response['value']
+        if isinstance(value, basestring):
+            if exception_class == ErrorInResponseException:
+                raise exception_class(response, value)
+            raise exception_class(value)
+        if message == "" and 'message' in value:
+            message = value['message']
+    
+        screen = None
+        if 'screen' in value:
+            screen = value['screen']
+    
+        stacktrace = None
+        if 'stackTrace' in value and value['stackTrace']:
+            stacktrace = []
+            try:
+                for frame in value['stackTrace']:
+                    line = self._value_or_default(frame, 'lineNumber', '')
+                    file = self._value_or_default(frame, 'fileName', '&lt;anonymous&gt;')
+                    if line:
+                        file = "%s:%s" % (file, line)
+                    meth = self._value_or_default(frame, 'methodName', '&lt;anonymous&gt;')
+                    if 'className' in frame:
+                        meth = "%s.%s" % (frame['className'], meth)
+                    msg = "    at %s (%s)"
+                    msg = msg % (meth, file)
+                    stacktrace.append(msg)
+            except TypeError:
+                pass
+        if exception_class == ErrorInResponseException:
+            raise exception_class(response, message)
+        elif exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if 'data' in value:
+                alert_text = value['data'].get('text')
+            elif 'alert' in value:
+                alert_text = value['alert'].get('text')
+            raise exception_class(message, screen, stacktrace, alert_text)
+&gt;       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[class='menu edit']"}
+E         (Session info: headless chrome=91.0.4472.124)
+
+c:\python39\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: NoSuchElementException</failure></testcase><testcase classname="test_z_interval_increment.Test" name="test_interval" time="6.640" /></testsuite></testsuites>

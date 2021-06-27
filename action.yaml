@@ -1,0 +1,19 @@
+name: Pytest Issue Creator
+
+description: This action creates issue(s) if the given pytest xml file has failures
+
+inputs:
+  file: # Filepath of our XML file
+    required: true
+    description: Filepath to pass into the python file.
+  token: # Github token to have access to create said issue.
+    required: true
+    description: Token of the user that creates the issue
+
+runs:
+  using: docker 
+  image: 'Dockerfile'
+
+branding: 
+  icon: arrow-down 
+  color: blue
