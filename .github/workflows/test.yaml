@@ -13,8 +13,5 @@ jobs:
         uses: ./
         # pass user input as arguments
         with:
-          title: Build Failed
+          file: '../pytest.xml'
           token: ${{secrets.GITHUB_TOKEN}} # default token in GitHub Workflow
-          assignees: ${{github.actor}} # actor who started the workflow
-          labels: worflow-failed
-          body: Workflow failed for commit ${{github.sha}}
