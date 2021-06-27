@@ -22,7 +22,7 @@ def hash_func(string):
     return hash_object.hexdigest()  
 
 def create_issue(f):
-    git = Github(os.environ['INPUT_TOKEN'])
+    git = GitHub(os.environ['INPUT_TOKEN'])
 
     # GITHUB_REPOSITORY is the repo name in owner/name format in Github Workflow
     repo = git.get_repo(os.environ['GITHUB_REPOSITORY'])
