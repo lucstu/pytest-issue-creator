@@ -1,5 +1,5 @@
 from junitparser import JUnitXml, Error, Failure, Skipped
-import github
+from github import GitHub
 import os
 import hashlib
 
@@ -22,10 +22,10 @@ def hash_func(string):
     return hash_object.hexdigest()  
 
 def create_issue(f):
-    github = github.Github(token)
+    git = Github(os.environ['INPUT_TOKEN'])
 
     # GITHUB_REPOSITORY is the repo name in owner/name format in Github Workflow
-    repo = github.get_repo(os.environ['GITHUB_REPOSITORY'])
+    repo = git.get_repo(os.environ['GITHUB_REPOSITORY'])
 
     body = 'There was a failed test in {}. This is the following error message: {}'.format(f[0], f[1])
 
