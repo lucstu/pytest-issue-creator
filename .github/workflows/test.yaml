@@ -13,5 +13,5 @@ jobs:
         uses: ./
         # pass user input as arguments
         with:
-          file: '../pytest.xml'
+          file: './pytest.xml'
           token: ${{secrets.GITHUB_TOKEN}} # default token in GitHub Workflow
