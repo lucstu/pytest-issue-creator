@@ -25,7 +25,7 @@ def create_issue(f):
     git = GitHub(os.environ['INPUT_TOKEN'])
 
     # GITHUB_REPOSITORY is the repo name in owner/name format in Github Workflow
-    repo = git.fetch_repository(os.environ['GITHUB_REPOSITORY'])
+    repo = git.get_repo(os.environ['GITHUB_REPOSITORY'])
 
     body = 'There was a failed test in {}. This is the following error message: {}'.format(f[0], f[1])
 
